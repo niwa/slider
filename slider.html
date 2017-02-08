@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+</head>
+
+
+
+
+
+<meta charset="utf-8">
+<style>
+
+    #slider {
+        width: 100%;
+    }
+
+    .ticks {
+        font: 10px sans-serif;
+    }
+
+    .track,
+    .track-inset,
+    .track-overlay {
+        stroke-linecap: round;
+    }
+
+    .track {
+        stroke: #000;
+        stroke-opacity: 0.3;
+        stroke-width: 10px;
+    }
+
+    .track-inset {
+        stroke: #ddd;
+        stroke-width: 8px;
+    }
+
+    .track-overlay {
+        pointer-events: stroke;
+        stroke: #ff00ff;
+        opacity:0;
+        stroke-width: 50px;
+        cursor: crosshair;
+    }
+
+    .handle {
+        fill: #fff;
+        stroke: #000;
+        stroke-opacity: 0.5;
+        stroke-width: 1.25px;
+    }
+
+</style>
+
+
+<svg height="50" preserveAspectRatio="xMinYMax meet" id="slider"></svg>
+
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script>
+
+
+    var slider = function () {
+
+        d3.selectAll("svg > *").remove();
+
+        var currentValue;
+        var steps = 6;
+        var svg = d3.select("svg");
+        var margin = {right: 50, left: 50};
+        var width = function () {
+            console.log('!!!');
+            console.log(document.querySelector('#slider').parentElement);
+            return +document.querySelector('#slider').parentNode.clientWidth - margin.left - margin.right;
+        };
+        var height = +svg.attr("height");
+
+
+        var x = d3.scaleLinear()
+            .domain([0, steps])
+            .range([0, width()])
+            .clamp(true);
+
+        var slider = svg.append("g")
+            .attr('id', 'sliderGroup')
+            .attr("class", "slider")
+            .attr("transform", "translate(" + margin.left + "," + height / 2 + ")");
+        slider.append("line")
+            .attr("class", "track")
+            .attr("x1", x.range()[0])
+            .attr("x2", x.range()[1])
+        slider.append("rect")
+            .attr("class", "track")
+            .attr("x",0)
+            .attr("y", -25)
+            .attr("height",50)
+            .attr("width", x.range()[1])
+            .attr("class", "track-overlay")
+            .call(d3.drag()
+                .on("start.interrupt", function () {
+                    slider.interrupt();
+                })
+                .on("start drag", function () {
+                    hue(x.invert(d3.event.x));
+                })
+                .on("end", function () {
+                    positionHandle(x.invert(d3.event.x))
+                }));
+
+        slider.insert("g", ".track-overlay")
+            .attr("class", "ticks")
+            .attr("transform", "translate(0," + 22 + ")")
+            .selectAll("text")
+            .data(x.ticks(steps))
+            .enter().append("text")
+            .attr("x", x)
+            .attr("text-anchor", "middle")
+            .text(function (d) {
+                return d
+            });
+
+
+
+
+
+
+
+
+
+        var handle = slider.insert("circle", ".track-overlay")
+            .attr("class", "handle")
+            .attr("r", 13);
+
+
+        function hue(h) {
+            handle.attr("cx", x(h));
+            if (parseInt(h) !== currentValue) {
+                console.log(parseInt(h));
+                currentValue = parseInt(h);
+            }
+        }
+
+        function positionHandle(p) {
+
+
+            var closestMin = parseInt(p);
+            var closestMax = parseInt(p + 1);
+            var dist = closestMax - closestMin;
+
+            var moveTo;
+            if (p <= closestMin + (dist / 2)) {
+                moveTo = closestMin
+            } else {
+                moveTo = closestMax;
+            }
+
+            slider.transition() // Gratuitous intro!
+                .duration(250)
+                .tween("hue", function () {
+                    var i = d3.interpolate(p, moveTo);
+                    return function (t) {
+                        hue(i(t));
+                    };
+                });
+
+
+        }
+    };
+
+
+    window.onresize = function (event) {
+        slider();
+    };
+
+    slider();
+</script>
