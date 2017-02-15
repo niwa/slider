@@ -1,1 +1,9 @@
 # Created by .ignore support plugin (hsz.mobi)
+/node_modules/
+.idea/workspace.xml
+dist/
+node_modules/
+src/app/app.component.html
+src/app/app.component.scss
+src/app/lib/
+src/index.ts

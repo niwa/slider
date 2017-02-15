@@ -1,22 +1,27 @@
 import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {HttpModule} from '@angular/http';
+import {FormsModule} from '@angular/forms';
 
 import {AppComponent} from './app.component';
-import { BrowserModule }  from '@angular/platform-browser';
+import {SliderModule} from "./lib/slider/slider.module";
 
-import {NiwaApplicationMessagesModule} from '../lib/niwa-application-messages.module';
 
 @NgModule({
     imports: [
         BrowserModule,
-        NiwaApplicationMessagesModule
+        HttpModule,
+        FormsModule,
+        SliderModule
     ],
     declarations: [
-        AppComponent
+        AppComponent,
     ],
-
+    providers: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {
     constructor() {
     }
+
 }
