@@ -1,10 +1,10 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {HttpModule} from '@angular/http';
-import {FormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
 
-import {AppComponent} from './app.component';
-import {SliderModule} from "./lib/slider/slider.module";
+import { AppComponent } from './app.component';
+import { SliderModule } from './lib/slider/slider.module';
 
 
 @NgModule({
@@ -21,7 +21,6 @@ import {SliderModule} from "./lib/slider/slider.module";
     bootstrap: [AppComponent]
 })
 export class AppModule {
-    constructor() {
-    }
+
 
 }

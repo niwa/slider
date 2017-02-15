@@ -1,1 +1,8 @@
 // styles applied on :host are applied on the current component, "app" in this case
+#number {
+  display: inline-block;
+  margin: 50px;
+  padding: 20px;
+  font-size: 2em;
+  border: 1px solid #0000ff;
+}
