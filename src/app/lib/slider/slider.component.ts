@@ -43,7 +43,7 @@ export class SliderComponent implements AfterViewInit {
 
         let width = () => {
             let sliderDiv = document.getElementById('niwa_slider');
-            return sliderDiv.parentElement.offsetWidth - this.margin.left - this.margin.right;
+            return sliderDiv.offsetWidth - this.margin.left - this.margin.right;
         };
 
 
