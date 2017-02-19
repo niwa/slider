@@ -28,7 +28,7 @@ describe('HomeComponent', () => {
 
         component.steps = 6;
         component.ticks = 6;
-        component.ngOnInit();
+        component.ngAfterViewInit();
         fixture.detectChanges();
 
         let compiled = fixture.debugElement.nativeElement;
